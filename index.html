@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Organizing Our Pet Shop with Maps and Sets!</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+        margin-top: 2rem;
+      }
+      pre {
+        background: #f8f9fa;
+        border-radius: 4px;
+        padding: 1rem;
+        overflow-x: auto;
+        border: 1px solid #e9ecef;
+        width: calc(100% - 2rem);
+      }
+      .keyword {
+        color: #0033b3;
+      }
+      .string {
+        color: #067d17;
+      }
+      .comment {
+        color: #8c8c8c;
+      }
+      .number {
+        color: #1750eb;
+      }
+      .type {
+        color: #000080;
+      }
+      .tip {
+        background: #e3f2fd;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+      .warning {
+        background: #fff3e0;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Maps and Sets: Level Up Your Pet Shop! 🏪✨</h1>
+
+    <p>
+      Remember how we used ArrayList and LinkedList to store our pets? That works great, but what if we want to quickly:
+    </p>
+    <ul>
+      <li>Find a pet by their name? 🔍</li>
+      <li>Group pets by their type? 🐾</li>
+      <li>Keep track of pet prices? 💰</li>
+      <li>Maintain a sorted list of pets? 📋</li>
+    </ul>
+
+    <div class="warning">
+      <strong>Current Problem:</strong> With ArrayList, finding a pet by name means checking every pet until we find a
+      match. What if we had 1000 pets? That could be slow! 🐌
+    </div>
+
+    <h2>Enter HashMap: Your Speed Dial for Pets! 📞</h2>
+
+    <p>
+      HashMap is like a phone book for your pets. Instead of searching through a list, you can look them up instantly by
+      name!
+    </p>
+
+    <pre><span class="keyword">import</span> java.util.HashMap;
+
+<span class="keyword">public class</span> PetRegistry {
+    <span class="keyword">private</span> HashMap&lt;String, Pet&gt; petsByName = <span class="keyword">new</span> HashMap&lt;&gt;();
+    
+    <span class="keyword">public void</span> registerPet(Pet pet) {
+        petsByName.put(pet.getName(), pet);
+        System.out.println(<span class="string">"🎉 Registered: "</span> + pet.getName());
+    }
+    
+    <span class="keyword">public</span> Pet findPet(String name) {
+        <span class="keyword">return</span> petsByName.get(name);  <span class="comment">// Instant lookup! ⚡</span>
+    }
+    
+    <span class="keyword">public void</span> displayAllPets() {
+        System.out.println(<span class="string">"📋 Registered Pets:"</span>);
+        <span class="keyword">for</span> (String name : petsByName.keySet()) {
+            Pet pet = petsByName.get(name);
+            System.out.println(<span class="string">"- "</span> + name + <span class="string">" ("</span> + 
+                             pet.getClass().getSimpleName() + <span class="string">")"</span>);
+        }
+    }
+}</pre>
+
+    <div class="tip">
+      <strong>How HashMap Works:</strong>
+      <ul>
+        <li>Each pet is stored with a "key" (their name)</li>
+        <li>Looking up by key is super fast!</li>
+        <li>Like finding a book by its ISBN instead of searching every shelf 📚</li>
+      </ul>
+    </div>
+
+    <h2>Let's Use Our Pet Registry! 🎯</h2>
+
+    <pre><span class="keyword">public static void</span> main(String[] args) {
+    PetRegistry registry = <span class="keyword">new</span> PetRegistry();
+    
+    <span class="comment">// Register some pets</span>
+    registry.registerPet(<span class="keyword">new</span> Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>));
+    registry.registerPet(<span class="keyword">new</span> Cat(<span class="string">"Whiskers"</span>, <span class="number">5</span>));
+    registry.registerPet(<span class="keyword">new</span> Fish(<span class="string">"Nemo"</span>, <span class="number">1</span>, WaterType.SALTWATER));
+    
+    <span class="comment">// Find a specific pet</span>
+    Pet foundPet = registry.findPet(<span class="string">"Buddy"</span>);
+    <span class="keyword">if</span> (foundPet != <span class="keyword">null</span>) {
+        System.out.println(<span class="string">"Found "</span> + foundPet.getName() + 
+                         <span class="string">"! They say: "</span> + foundPet.makeSound());
+    }
+    
+    <span class="comment">// Show all registered pets</span>
+    registry.displayAllPets();
+}</pre>
+
+    <h2>Common HashMap Operations 🛠️</h2>
+
+    <pre><span class="comment">// Adding items</span>
+petsByName.put(<span class="string">"Max"</span>, <span class="keyword">new</span> Dog(<span class="string">"Max"</span>, <span class="number">2</span>));
+
+<span class="comment">// Checking if exists</span>
+<span class="keyword">boolean</span> hasPet = petsByName.containsKey(<span class="string">"Max"</span>);
+
+<span class="comment">// Removing items</span>
+Pet removedPet = petsByName.remove(<span class="string">"Max"</span>);
+
+<span class="comment">// Getting all keys or values</span>
+Set&lt;String&gt; allNames = petsByName.keySet();
+Collection&lt;Pet&gt; allPets = petsByName.values();</pre>
+
+    <h2>Leveling Up Our Pet Registry! 🚀</h2>
+
+    <p>Let's make our pet registry more useful by adding prices and grouping pets by type!</p>
+
+    <pre><span class="keyword">public class</span> EnhancedPetRegistry {
+    <span class="keyword">private</span> HashMap&lt;String, Pet&gt; petsByName = <span class="keyword">new</span> HashMap&lt;&gt;();
+    <span class="keyword">private</span> HashMap&lt;String, Double&gt; petPrices = <span class="keyword">new</span> HashMap&lt;&gt;();
+    <span class="keyword">private</span> HashMap&lt;Class&lt;?&gt;, ArrayList&lt;Pet&gt;&gt; petsByType = <span class="keyword">new</span> HashMap&lt;&gt;();
+
+    <span class="keyword">public void</span> registerPet(Pet pet, <span class="keyword">double</span> price) {
+        <span class="comment">// Store pet with their name</span>
+        petsByName.put(pet.getName(), pet);
+        
+        <span class="comment">// Store pet's price</span>
+        petPrices.put(pet.getName(), price);
+        
+        <span class="comment">// Group by type</span>
+        Class&lt;?&gt; petType = pet.getClass();
+        petsByType.putIfAbsent(petType, <span class="keyword">new</span> ArrayList&lt;&gt;());
+        petsByType.get(petType).add(pet);
+        
+        System.out.println(<span class="string">"🎉 Registered "</span> + pet.getName() + 
+                         <span class="string">" for $"</span> + price);
+    }
+    
+    <span class="keyword">public void</span> displayByType() {
+        System.out.println(<span class="string">"🐾 Pets By Type 🐾"</span>);
+        <span class="keyword">for</span> (Class&lt;?&gt; type : petsByType.keySet()) {
+            ArrayList&lt;Pet&gt; petsOfType = petsByType.get(type);
+            System.out.println(<span class="string">"\n"</span> + type.getSimpleName() + 
+                             <span class="string">"s ("</span> + petsOfType.size() + <span class="string">"):"</span>);
+            
+            <span class="keyword">for</span> (Pet pet : petsOfType) {
+                Double price = petPrices.get(pet.getName());
+                System.out.println(<span class="string">"  - "</span> + pet.getName() + 
+                                 <span class="string">" ($"</span> + price + <span class="string">")"</span>);
+            }
+        }
+    }
+}</pre>
+
+    <div class="tip">
+      <strong>HashMap Tips:</strong>
+      <ul>
+        <li>putIfAbsent - only puts if key doesn't exist</li>
+        <li>Multiple HashMaps can work together!</li>
+        <li>Keys must be unique, values don't have to be</li>
+      </ul>
+    </div>
+
+    <h2>Handling Name Collisions 🤔</h2>
+
+    <p>What happens if two pets have the same name? Let's create a system that handles this:</p>
+
+    <pre><span class="keyword">import</span> java.util.UUID;
+
+<span class="keyword">public class</span> SmartPetRegistry {
+    <span class="keyword">private</span> HashMap&lt;String, String&gt; idsByName = <span class="keyword">new</span> HashMap&lt;&gt;();
+    <span class="keyword">private</span> HashMap&lt;String, Pet&gt; petsById = <span class="keyword">new</span> HashMap&lt;&gt;();
+    
+    <span class="keyword">public</span> String registerPet(Pet pet) {
+        String name = pet.getName();
+        String id = UUID.randomUUID().toString();
+        
+        <span class="comment">// If name exists, add a number to it</span>
+        <span class="keyword">if</span> (idsByName.containsKey(name)) {
+            <span class="keyword">int</span> count = <span class="number">1</span>;
+            String newName = name;
+            <span class="keyword">while</span> (idsByName.containsKey(newName)) {
+                count++;
+                newName = name + <span class="string">" "</span> + count;
+            }
+            name = newName;
+        }
+        
+        idsByName.put(name, id);
+        petsById.put(id, pet);
+        
+        System.out.println(<span class="string">"🆔 Registered: "</span> + name + 
+                         <span class="string">" (ID: "</span> + id + <span class="string">")"</span>);
+        <span class="keyword">return</span> id;
+    }
+}</pre>
+
+    <h2>Introducing TreeSet: Keeping Things in Order! 📋</h2>
+
+    <p>What if we want to keep our pets sorted by age? Enter TreeSet!</p>
+
+    <pre><span class="keyword">import</span> java.util.TreeSet;
+
+<span class="keyword">public class</span> SortedPetRegistry {
+    <span class="keyword">private</span> TreeSet&lt;Pet&gt; petsByAge;
+    
+    <span class="keyword">public</span> SortedPetRegistry() {
+        <span class="comment">// Create TreeSet with custom comparator</span>
+        petsByAge = <span class="keyword">new</span> TreeSet&lt;&gt;((<span class="type">Pet</span> p1, <span class="type">Pet</span> p2) -> {
+            <span class="keyword">int</span> ageCompare = Integer.compare(p1.getAge(), p2.getAge());
+            <span class="comment">// If ages are equal, compare names to ensure uniqueness</span>
+            <span class="keyword">return</span> ageCompare != <span class="number">0</span> ? ageCompare : 
+                   p1.getName().compareTo(p2.getName());
+        });
+    }
+    
+    <span class="keyword">public void</span> addPet(Pet pet) {
+        petsByAge.add(pet);
+    }
+    
+    <span class="keyword">public void</span> displaySortedPets() {
+        System.out.println(<span class="string">"📊 Pets By Age:"</span>);
+        <span class="keyword">for</span> (Pet pet : petsByAge) {
+            System.out.println(<span class="string">"- "</span> + pet.getName() + 
+                             <span class="string">" (Age: "</span> + pet.getAge() + <span class="string">")"</span>);
+        }
+    }
+}</pre>
+
+    <div class="warning">
+      <strong>Important:</strong> TreeSet needs a way to compare elements! Either:
+      <ul>
+        <li>Your class must implement Comparable, or</li>
+        <li>You must provide a Comparator (like we did above)</li>
+      </ul>
+    </div>
+
+    <h2>Practice Challenge: Pet Statistics! 📊</h2>
+
+    <p>Create a system that tracks these statistics using appropriate Maps:</p>
+
+    <pre><span class="keyword">public class</span> PetStatistics {
+    <span class="comment">// TODO: Add appropriate Maps to track:
+    // 1. Average age per pet type
+    // 2. Number of pets by type
+    // 3. Total value (price) of pets by type
+    // 4. Most expensive pet of each type</span>
+    
+    <span class="keyword">public void</span> addPet(Pet pet, <span class="keyword">double</span> price) {
+        <span class="comment">// TODO: Update all statistics when adding a pet</span>
+    }
+    
+    <span class="keyword">public void</span> displayStatistics() {
+        <span class="comment">// TODO: Show all statistics in a nice format</span>
+    }
+}</pre>
+
+    <h2>Advanced TreeSet: Multiple Sort Orders! 🔄</h2>
+
+    <p>What if we want to sort pets in different ways? Let's create separate TreeSets:</p>
+
+    <pre><span class="keyword">public class</span> AdvancedPetRegistry {
+    <span class="keyword">private</span> TreeSet&lt;Pet&gt; petsByAge;
+    <span class="keyword">private</span> TreeSet&lt;Pet&gt; petsByName;
+    <span class="keyword">private</span> HashMap&lt;Class&lt;?&gt;, TreeSet&lt;Pet&gt;&gt; sortedPetsByType;
+    
+    <span class="keyword">public</span> AdvancedPetRegistry() {
+        <span class="comment">// Sort by age, then name</span>
+        petsByAge = <span class="keyword">new</span> TreeSet&lt;&gt;((p1, p2) -> {
+            <span class="keyword">int</span> ageCompare = Integer.compare(p1.getAge(), p2.getAge());
+            <span class="keyword">return</span> ageCompare != <span class="number">0</span> ? ageCompare : 
+                   p1.getName().compareTo(p2.getName());
+        });
+        
+        <span class="comment">// Sort by name only</span>
+        petsByName = <span class="keyword">new</span> TreeSet&lt;&gt;((p1, p2) -> 
+            p1.getName().compareTo(p2.getName()));
+            
+        <span class="comment">// Separate sorted sets for each pet type</span>
+        sortedPetsByType = <span class="keyword">new</span> HashMap&lt;&gt;();
+    }
+    
+    <span class="keyword">public void</span> addPet(Pet pet) {
+        petsByAge.add(pet);
+        petsByName.add(pet);
+        
+        <span class="comment">// Add to type-specific sorted set</span>
+        Class&lt;?&gt; petType = pet.getClass();
+        sortedPetsByType.putIfAbsent(petType, <span class="keyword">new</span> TreeSet&lt;&gt;(
+            (p1, p2) -> p1.getName().compareTo(p2.getName())
+        ));
+        sortedPetsByType.get(petType).add(pet);
+    }
+    
+    <span class="keyword">public void</span> displayAllSortOrders() {
+        System.out.println(<span class="string">"🔄 Pets By Age:"</span>);
+        <span class="keyword">for</span> (Pet pet : petsByAge) {
+            System.out.println(<span class="string">"  "</span> + pet.getName() + <span class="string">" (Age: "</span> + 
+                             pet.getAge() + <span class="string">")"</span>);
+        }
+        
+        System.out.println(<span class="string">"\n📝 Pets By Name:"</span>);
+        <span class="keyword">for</span> (Pet pet : petsByName) {
+            System.out.println(<span class="string">"  "</span> + pet.getName());
+        }
+        
+        System.out.println(<span class="string">"\n🎯 Pets By Type (Sorted):"</span>);
+        <span class="keyword">for</span> (Class&lt;?&gt; type : sortedPetsByType.keySet()) {
+            System.out.println(type.getSimpleName() + <span class="string">"s:"</span>);
+            <span class="keyword">for</span> (Pet pet : sortedPetsByType.get(type)) {
+                System.out.println(<span class="string">"  "</span> + pet.getName());
+            }
+        }
+    }
+}</pre>
+
+    <h2>Putting It All Together: Pet Shop Management System! 🏪</h2>
+
+    <p>Let's create a complete system that uses everything we've learned:</p>
+
+    <pre><span class="keyword">public class</span> PetShopManager {
+    <span class="keyword">private</span> HashMap&lt;String, Pet&gt; inventory;
+    <span class="keyword">private</span> HashMap&lt;String, Double&gt; prices;
+    <span class="keyword">private</span> TreeSet&lt;Pet&gt; adoptionQueue;
+    <span class="keyword">private</span> HashMap&lt;Class&lt;?&gt;, Integer&gt; stockAlerts;
+    
+    <span class="keyword">public</span> PetShopManager() {
+        inventory = <span class="keyword">new</span> HashMap&lt;&gt;();
+        prices = <span class="keyword">new</span> HashMap&lt;&gt;();
+        
+        <span class="comment">// Sort adoption queue by age (older pets first)</span>
+        adoptionQueue = <span class="keyword">new</span> TreeSet&lt;&gt;((p1, p2) -> {
+            <span class="keyword">return</span> p2.getAge() - p1.getAge();
+        });
+        
+        <span class="comment">// Set minimum stock levels for alerts</span>
+        stockAlerts = <span class="keyword">new</span> HashMap&lt;&gt;();
+        stockAlerts.put(Dog.<span class="keyword">class</span>, <span class="number">3</span>);
+        stockAlerts.put(Cat.<span class="keyword">class</span>, <span class="number">3</span>);
+        stockAlerts.put(Fish.<span class="keyword">class</span>, <span class="number">5</span>);
+    }
+    
+    <span class="keyword">public void</span> checkInventoryAlerts() {
+        System.out.println(<span class="string">"📊 Stock Level Alerts:"</span>);
+        <span class="keyword">for</span> (Class&lt;?&gt; type : stockAlerts.keySet()) {
+            <span class="keyword">long</span> count = inventory.values().stream()
+                .filter(p -> p.getClass() == type)
+                .count();
+                
+            <span class="keyword">int</span> minRequired = stockAlerts.get(type);
+            <span class="keyword">if</span> (count < minRequired) {
+                System.out.println(<span class="string">"⚠️ Low on "</span> + type.getSimpleName() + 
+                                 <span class="string">"s! Have "</span> + count + 
+                                 <span class="string">", need "</span> + minRequired);
+            }
+        }
+    }
+}</pre>
+
+    <h2>Final Challenge: Build a Complete Pet Shop System! 🏆</h2>
+
+    <p>Create a system that can:</p>
+
+    <ol>
+      <li>Track inventory and prices using HashMap</li>
+      <li>Maintain adoption waiting lists using TreeSet</li>
+      <li>Group pets by type and age ranges</li>
+      <li>Generate reports and statistics</li>
+    </ol>
+
+    <p>Requirements:</p>
+
+    <pre><span class="keyword">public class</span> PetShopSystem {
+    <span class="comment">// TODO: Add appropriate data structures
+    
+    // Required features:
+    // 1. Add/remove pets with prices
+    // 2. Process adoptions (FIFO per pet type)
+    // 3. Track sales history
+    // 4. Generate daily reports
+    // 5. Manage stock levels</span>
+    
+    <span class="keyword">public void</span> addNewPet(Pet pet, <span class="keyword">double</span> price) {
+        <span class="comment">// TODO: Implement this</span>
+    }
+    
+    <span class="keyword">public void</span> processAdoption(String petType) {
+        <span class="comment">// TODO: Implement this</span>
+    }
+    
+    <span class="keyword">public void</span> generateDailyReport() {
+        <span class="comment">// TODO: Implement this</span>
+    }
+}</pre>
+
+    <div class="tip">
+      <strong>Bonus Features:</strong>
+      <ul>
+        <li>Track most popular pet types</li>
+        <li>Calculate average time to adoption</li>
+        <li>Implement a loyalty points system</li>
+        <li>Generate sales predictions</li>
+      </ul>
+    </div>
+
+    <h2>What We've Learned 🎓</h2>
+
+    <ul>
+      <li>Using HashMap for quick lookups and grouping</li>
+      <li>Handling duplicate keys and complex data relationships</li>
+      <li>Using TreeSet for automatic sorting</li>
+      <li>Combining different collection types</li>
+      <li>Real-world applications of Java collections</li>
+    </ul>
+
+    <div class="warning">
+      <strong>Remember:</strong>
+      <ul>
+        <li>HashMap = Fast lookups by key 🔍</li>
+        <li>TreeSet = Automatic sorting 📊</li>
+        <li>Choose the right tool for the job! 🛠️</li>
+      </ul>
+    </div>
+
+    <p>Next up: We'll learn about abstract classes and interfaces to make our pet shop even more flexible! 🚀</p>
+  </body>
+</html>
